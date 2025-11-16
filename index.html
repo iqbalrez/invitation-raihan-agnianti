@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Tasyakuran Pernikahan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Garamond"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            goldsoft: '#c9a36b',
+            krem: '#faf4ec'
+          },
+          keyframes: {
+            'float-slow': {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            'fade-in': {
+              '0%': { opacity: 0 },
+              '100%': { opacity: 1 },
+            }
+          },
+          animation: {
+            'float-slow': 'float-slow 8s ease-in-out infinite',
+            'fade-in': 'fade-in 1s ease-out both',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Optional Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans bg-krem text-slate-800">
+
+  <!-- Background gradient -->
+  <div class="fixed inset-0 -z-30 bg-gradient-to-b from-krem via-white to-krem"></div>
+
+  <!-- Dekor bunga background (ganti src dengan file PNG bunga kalian) -->
+  <div class="pointer-events-none fixed inset-0 -z-20 overflow-hidden">
+    <!-- Sudut kiri atas -->
+    <img
+      src="img/flower-corner-left.png"
+      alt=""
+      class="absolute -right-6 w-40 md:w-52 opacity-70 animate-float-slow"
+    >
+    <!-- Sudut kanan bawah -->
+    <img
+      src="img/flower-corner-right.png"
+      alt=""
+      class="absolute -bottom-0 -left-6 w-40 md:w-52 opacity-70 animate-float-slow"
+    >
+    <!-- Atas tengah semacam rangkaian -->
+    <img
+      src="img/flower-top-center.png"
+      alt=""
+      class="absolute left-1/2 -translate-x-1/2 w-40 md:w-52 opacity-80 animate-fade-in"
+    >
+  </div>
+
+  <!-- Wrapper utama -->
+  <div class="min-h-screen max-w-xl mx-auto px-4 pb-10 relative z-10">
+
+    <!-- HERO -->
+    <section
+      class="flex flex-col justify-center items-center text-center min-h-screen js-reveal opacity-0 translate-y-6 transition-all duration-700"
+    >
+      <p class="tracking-[0.35em] text-[0.65rem] md:text-xs uppercase text-slate-500">
+        Tasyakuran Pernikahan
+      </p>
+
+      <h1 class="mt-4 text-3xl md:text-4xl font-semibold">
+        Raihan <span class="text-goldsoft">&</span> Agnianti
+      </h1>
+
+      <p class="mt-3 text-sm md:text-base text-slate-600">
+        Minggu, 28 Desember 2025 · Kota Contoh
+      </p>
+
+      <div class="mt-5 flex items-center gap-2 text-xs md:text-sm text-slate-500">
+        <span class="inline-block w-9 h-px bg-goldsoft/60"></span>
+        <span class="italic">Bismillahirrahmanirrahim</span>
+        <span class="inline-block w-9 h-px bg-goldsoft/60"></span>
+      </div>
+
+      <p class="mt-5 text-sm md:text-[15px] text-slate-700 max-w-md">
+        Dengan memanjatkan puji syukur ke hadirat Allah SWT, kami mengundang Bapak Ibu Saudara
+        untuk hadir dalam acara tasyakuran pernikahan kami.
+      </p>
+
+      <button
+        onclick="document.getElementById('detail-acara').scrollIntoView({behavior:'smooth'})"
+        class="mt-8 inline-flex items-center gap-2 rounded-full bg-goldsoft px-6 py-2.5 text-sm md:text-base font-medium text-white shadow-md hover:shadow-lg hover:brightness-105 transition"
+      >
+        Lihat detail acara
+        <span class="text-lg">↓</span>
+      </button>
+    </section>
+
+    <!-- KARTU PEMBUKA (card lebih dekoratif) -->
+    <section
+      class="mb-4 js-reveal opacity-0 translate-y-6 transition-all duration-700"
+    >
+      <div class="relative rounded-3xl bg-gradient-to-br from-goldsoft/20 via-white to-goldsoft/10 p-[1.5px] shadow-lg">
+        <div class="relative rounded-[1.6rem] bg-white/90 backdrop-blur-sm border border-white/60 px-6 py-7 md:px-7 md:py-8">
+          <!-- dekor kecil bunga di header card -->
+          <img
+            src="img/flower-small-double.png"
+            alt=""
+            class="absolute -top-4 left-1/2 -translate-x-1/2 w-24 opacity-80"
+          >
+
+          <h2 class="text-center text-lg font-semibold mb-3">
+            Assalamu’alaikum warahmatullahi wabarakatuh
+          </h2>
+          <p class="text-sm md:text-[15px] leading-relaxed text-slate-700">
+            Dengan memohon rahmat dan ridha Allah SWT, kami memanjatkan syukur atas terselenggaranya
+            akad pernikahan kami dan bermaksud mengundang Bapak Ibu Saudara untuk hadir dalam
+            acara tasyakuran pernikahan sebagai wujud rasa syukur dan doa bersama.
+          </p>
+          <p class="mt-4 text-center text-xs md:text-sm italic text-slate-500">
+            “Semoga Allah menjadikan rumah tangga kami sebagai rumah tangga yang sakinah,
+            mawaddah, dan rahmah.”
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DETAIL ACARA (card dekor + divider cantik) -->
+    <section
+      id="detail-acara"
+      class="mb-4 js-reveal min-h-screen flex items-center my-auto opacity-0 transition-all duration-700"
+    >
+      <div class="relative rounded-full bg-gradient-to-br from-goldsoft/18 via-white to-goldsoft/8 p-[1.5px] shadow-lg">
+        <div class="relative rounded-full bg-white/95 backdrop-blur-sm border border-white/70 px-20 py-48">
+
+          <img
+            src="img/flower-small.png"
+            alt=""
+            class="absolute top-20 left-6 -scale-x-100 w-14 opacity-80"
+          >
+
+          <h2 class="text-center text-lg font-semibold mb-1">
+            Detail Acara
+          </h2>
+
+          <p class="text-center text-xs md:text-sm text-slate-500 mb-4">
+            Tasyakuran Pernikahan Raihan &amp; Agnianti
+          </p>
+
+          <div class="flex justify-center mb-4">
+            <div class="w-16 h-px bg-goldsoft/60"></div>
+          </div>
+
+          <div class="space-y-3 text-sm md:text-[15px]">
+            <div class="flex justify-between gap-4">
+              <span class="font-medium text-slate-600">Hari, tanggal</span>
+              <span class="text-right text-slate-700">
+                Minggu, 28 Desember 2025
+              </span>
+            </div>
+
+            <div class="flex justify-between gap-4">
+              <span class="font-medium text-slate-600">Waktu</span>
+              <span class="text-right text-slate-700">
+                11.00 s.d. 14.00 WIB (Sesi 1) <br> 14.00 s.d. 16.00 WIB (Sesi 2)
+              </span>
+            </div>
+
+            <div class="flex justify-between gap-4">
+              <span class="font-medium text-slate-600">Tempat</span>
+              <span class="text-right text-slate-700">
+                The Westlake Resto<br>
+                Jl. Contoh No. 123, Kota Contoh
+              </span>
+            </div>
+
+            <div class="flex justify-between gap-4">
+              <span class="font-medium text-slate-600">Lokasi</span>
+              <span class="text-right text-slate-700">
+                Kota Contoh, Indonesia
+              </span>
+            </div>
+          </div>
+
+          <p class="mt-4 text-sm text-slate-700">
+            Tautan lokasi:
+            <a
+              href="https://maps.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-goldsoft font-medium underline-offset-2 hover:underline"
+            >
+              buka di Google Maps
+            </a>
+          </p>
+
+          <p class="mt-4 text-sm md:text-[15px] leading-relaxed text-slate-700">
+            Acara tasyakuran insya Allah diisi dengan pembacaan doa, pengajian singkat, dan ramah tamah
+            bersama keluarga, kerabat, dan sahabat terdekat.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERI FOTO (single column) -->
+    <section
+      class="mb-4 js-reveal opacity-0 translate-y-6 transition-all duration-700"
+    >
+      <div class="relative rounded-3xl bg-gradient-to-br from-goldsoft/18 via-white to-goldsoft/8 p-[1.5px] shadow-lg">
+        <div class="relative rounded-[1.6rem] bg-white/95 backdrop-blur-sm border border-white/70 px-6 py-7 md:px-7 md:py-8">
+
+          <img
+            src="img/flower-small.png"
+            alt=""
+            class="absolute -top-5 right-6 w-14 opacity-80"
+          >
+
+          <h2 class="text-center text-lg font-semibold mb-3">
+            Galeri Foto
+          </h2>
+          <p class="text-sm md:text-[15px] leading-relaxed text-slate-700 text-center mb-5">
+            Beberapa momen kebersamaan kami yang ingin kami bagi sebelum menyambut kedatangan Bapak Ibu Saudara.
+          </p>
+
+          <!-- Single column gallery -->
+          <div class="space-y-4">
+            <div class="relative overflow-hidden rounded-2xl border border-white/80 shadow-sm group">
+              <img
+                src="img/gallery-1.jpg"
+                alt="Foto prewedding 1"
+                class="w-full object-cover transition duration-500 group-hover:scale-105 group-hover:brightness-105"
+              >
+              <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+            </div>
+
+            <div class="relative overflow-hidden rounded-2xl border border-white/80 shadow-sm group">
+              <img
+                src="img/gallery-4.jpg"
+                alt="Foto prewedding 2"
+                class="w-full object-cover transition duration-500 group-hover:scale-105 group-hover:brightness-105"
+              >
+              <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+            </div>
+
+            <div class="relative overflow-hidden rounded-2xl border border-white/80 shadow-sm group">
+              <img
+                src="img/gallery-3.jpg"
+                alt="Foto berdua"
+                class="w-full object-cover transition duration-500 group-hover:scale-105 group-hover:brightness-105"
+              >
+              <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+            </div>
+
+            <div class="relative overflow-hidden rounded-2xl border border-white/80 shadow-sm group">
+              <img
+                src="img/gallery-2.jpg"
+                alt="Momen spesial"
+                class="w-full object-cover transition duration-500 group-hover:scale-105 group-hover:brightness-105"
+              >
+              <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PENUTUP -->
+    <section
+      class="mb-6 js-reveal opacity-0 translate-y-6 transition-all duration-700"
+    >
+      <div class="relative rounded-3xl bg-gradient-to-br from-goldsoft/20 via-white to-goldsoft/10 p-[1.5px] shadow-lg">
+        <div class="relative rounded-[1.6rem] bg-white/92 backdrop-blur-sm border border-white/70 px-6 py-7 md:px-7 md:py-8">
+
+          <img
+            src="img/flower-small-double.png"
+            alt=""
+            class="absolute rotate-180 -bottom-6 left-1/2 -translate-x-1/2 w-36 opacity-80"
+          >
+
+          <h2 class="text-center text-lg font-semibold mb-3">
+            Terima kasih
+          </h2>
+          <p class="text-sm md:text-[15px] leading-relaxed text-slate-700">
+            Kehadiran dan doa Bapak Ibu Saudara menjadi hadiah paling berharga bagi kami. Semoga Allah SWT
+            membalas setiap langkah dan doa dengan keberkahan yang melimpah.
+          </p>
+          <p class="mt-4 text-sm text-center text-slate-700">
+            Wassalamu’alaikum warahmatullahi wabarakatuh.
+          </p>
+          <p class="mt-5 text-center text-sm font-semibold text-slate-800">
+            Raihan dan Agnianti<br>
+            Beserta keluarga besar
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER KECIL -->
+    <footer
+      class="text-center text-[11px] text-slate-500 mb-4 js-reveal opacity-0 translate-y-6 transition-all duration-700"
+    >
+      Tasyakuran Pernikahan · Raihan dan Agnianti · 2026
+    </footer>
+  </div>
+
+  <!-- SCRIPT: reveal on scroll -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const reveals = document.querySelectorAll('.js-reveal');
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.remove('opacity-0', 'translate-y-6');
+              entry.target.classList.add('opacity-100', 'translate-y-0');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.15
+        }
+      );
+
+      reveals.forEach((el) => {
+        observer.observe(el);
+      });
+    });
+  </script>
+
+</body>
+</html>
