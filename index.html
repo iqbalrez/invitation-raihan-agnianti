@@ -13,7 +13,7 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Garamond"', 'system-ui', 'sans-serif'],
+            sans: ['Garamond', 'system-ui', 'sans-serif'],
           },
           colors: {
             goldsoft: '#c9a36b',
@@ -45,8 +45,16 @@
 </head>
 <body class="font-sans bg-krem text-slate-800">
 
-  <!-- Background gradient -->
-  <div class="fixed inset-0 -z-30 bg-gradient-to-b from-krem via-white to-krem"></div>
+
+  <!-- Layer pattern batik -->
+  <div
+    class="fixed inset-0 -z-40 bg-[url('img/batik-pattern.png')] bg-repeat bg-[length:300px_168px] opacity-5"
+  ></div>
+
+  <!-- Layer gradient supaya ada area yang lebih jelas & area yang lembut -->
+  <div
+    class="fixed inset-0 -z-30 bg-gradient-to-b from-krem/95 via-krem/40 to-krem/95"
+  ></div>
 
   <!-- Dekor bunga background (ganti src dengan file PNG bunga kalian) -->
   <div class="pointer-events-none fixed inset-0 -z-20 overflow-hidden">
