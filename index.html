@@ -50,7 +50,7 @@
 
 <body class="font-sans bg-krem text-slate-800">
   <!-- Musik Latar -->
-  <audio id="bg-music" src="audio/lagu.mp3" loop></audio>
+  <audio id="bg-music" src="audio/lagu.mp3" loop preload="auto"></audio>
 
   <!-- Layer pattern batik -->
   <div class="fixed inset-0 -z-40 bg-[url('img/batik-pattern.png')] bg-repeat bg-[length:300px_168px] opacity-5"></div>
@@ -517,6 +517,25 @@
     </footer>
   </div>
 
+  <!-- TOMBOL MUTE / UNMUTE -->
+  <button id="toggle-audio"
+    class="fixed z-40 bottom-4 right-4 inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/85 border border-goldsoft/60 text-goldsoft shadow-lg backdrop-blur-md hover:bg-goldsoft hover:text-white transition"
+    aria-label="Mute atau unmute musik">
+    <!-- ikon sound on -->
+    <svg id="icon-sound-on" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 5L6 9H3v6h3l5 4V5z" />
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+      <path d="M18.07 5.93a9 9 0 0 1 0 12.73" />
+    </svg>
+    <!-- ikon muted -->
+    <svg id="icon-sound-off" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 5L6 9H3v6h3l5 4V5z" />
+      <line x1="18" y1="9" x2="22" y2="13" />
+      <line x1="22" y1="9" x2="18" y2="13" />
+    </svg>
+  </button>
 
   <script>
       // Animasi muncul saat scroll
@@ -609,7 +628,7 @@
           audio
             .play()
             .then(() => {
-              audio.volume = 0.6;
+              audio.volume = 0.4;
               isPlaying = true;
             })
             .catch((err) => {
@@ -617,6 +636,68 @@
             });
         }
       });
+
+      // Toggle mute/unmute audio
+      // Musik + cover "Buka Undangan" + tombol mute
+      (function () {
+        const audio = document.getElementById("bg-music");
+        const cover = document.getElementById("invite-cover");
+        const openBtn = document.getElementById("open-invite-btn");
+        const toggleBtn = document.getElementById("toggle-audio");
+        const iconOn = document.getElementById("icon-sound-on");
+        const iconOff = document.getElementById("icon-sound-off");
+
+        if (!audio || !cover || !openBtn || !toggleBtn) return;
+
+        let isMuted = false;
+        let isOpened = false;
+
+        // Saat klik "Buka Undangan"
+        openBtn.addEventListener("click", function () {
+          if (isOpened) return;
+          isOpened = true;
+
+          // sembunyikan cover dengan animasi
+          cover.classList.add("opacity-0", "pointer-events-none");
+          setTimeout(() => {
+            cover.classList.add("hidden");
+          }, 500);
+
+          // play musik (inisiatif user → tidak diblok browser)
+          audio.muted = isMuted;
+          audio.currentTime = 0;
+          audio.play().catch(() => {
+            // kalau gagal (misal browser strict), minimal cover tetap hilang
+          });
+        });
+
+        // Toggle mute/unmute
+        toggleBtn.addEventListener("click", function () {
+          // kalau belum pernah dibuka, jangan paksa play, cuma set state mute
+          if (!isOpened) {
+            isMuted = !isMuted;
+          } else {
+            if (audio.muted || audio.paused) {
+              audio.muted = false;
+              audio.play().catch(() => { });
+              isMuted = false;
+            } else {
+              audio.muted = true;
+              isMuted = true;
+            }
+          }
+
+          // update icon
+          if (isMuted || audio.muted) {
+            iconOn.classList.add("hidden");
+            iconOff.classList.remove("hidden");
+          } else {
+            iconOn.classList.remove("hidden");
+            iconOff.classList.add("hidden");
+          }
+        });
+      })();
+
     })();
   </script>
 </body>
