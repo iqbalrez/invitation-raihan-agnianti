@@ -607,64 +607,85 @@
       const timer = setInterval(updateCountdown, 1000);
     })();
 
-    // Musik + cover "Buka Undangan" + tombol mute
+    // Tombol "Buka Undangan" → play musik + scroll ke detail acara + mute/unmute
     (function () {
+      const btn = document.getElementById("btn-open-invite");
       const audio = document.getElementById("bg-music");
-      const cover = document.getElementById("invite-cover");
-      const openBtn = document.getElementById("open-invite-btn");
+      const detailSection = document.getElementById("opening-card");
+
       const toggleBtn = document.getElementById("toggle-audio");
       const iconOn = document.getElementById("icon-sound-on");
       const iconOff = document.getElementById("icon-sound-off");
 
-      if (!audio || !cover || !openBtn || !toggleBtn) return;
+      if (!audio || !toggleBtn || !iconOn || !iconOff) return;
 
+      let isPlaying = false;
       let isMuted = false;
-      let isOpened = false;
 
-      // Saat klik "Buka Undangan"
-      openBtn.addEventListener("click", function () {
-        if (isOpened) return;
-        isOpened = true;
-
-        // sembunyikan cover dengan animasi
-        cover.classList.add("opacity-0", "pointer-events-none");
-        setTimeout(() => {
-          cover.classList.add("hidden");
-        }, 500);
-
-        // play musik (inisiatif user → tidak diblok browser)
-        audio.muted = isMuted;
-        audio.currentTime = 0;
-        audio.play().catch(() => {
-          // kalau gagal (misal browser strict), minimal cover tetap hilang
-        });
-      });
-
-      // Toggle mute/unmute
-      toggleBtn.addEventListener("click", function () {
-        // kalau belum pernah dibuka, jangan paksa play, cuma set state mute
-        if (!isOpened) {
-          isMuted = !isMuted;
-        } else {
-          if (audio.muted || audio.paused) {
-            audio.muted = false;
-            audio.play().catch(() => { });
-            isMuted = false;
-          } else {
-            audio.muted = true;
-            isMuted = true;
-          }
-        }
-
-        // update icon
-        if (isMuted || audio.muted) {
+      function updateIcons() {
+        if (audio.muted || isMuted) {
           iconOn.classList.add("hidden");
           iconOff.classList.remove("hidden");
         } else {
           iconOn.classList.remove("hidden");
           iconOff.classList.add("hidden");
         }
+      }
+
+      // tombol "Buka Undangan"
+      if (btn) {
+        btn.addEventListener("click", function () {
+          // scroll ke detail acara
+          if (detailSection) {
+            detailSection.scrollIntoView({ behavior: "smooth" });
+          }
+
+          audio.muted = false;
+          isMuted = false;
+          audio.currentTime = 0;
+          audio.volume = 0.4;
+
+          if (!isPlaying) {
+            audio
+              .play()
+              .then(() => {
+                isPlaying = true;
+                updateIcons();
+              })
+              .catch((err) => {
+                console.log("Gagal memutar audio:", err);
+              });
+          } else {
+            updateIcons();
+          }
+        });
+      }
+
+      // tombol mute/unmute kecil di pojok
+      toggleBtn.addEventListener("click", function () {
+        // kalau belum pernah diputar, mulai dulu
+        if (!isPlaying && audio.paused) {
+          audio.volume = 0.4;
+          audio
+            .play()
+            .then(() => {
+              isPlaying = true;
+              isMuted = false;
+              audio.muted = false;
+              updateIcons();
+            })
+            .catch(() => { });
+          return;
+        }
+
+        // toggle mute
+        isMuted = !isMuted;
+        audio.muted = isMuted;
+        updateIcons();
       });
+
+      // set icon awal
+      updateIcons();
     })();
   </script>
 </body>
