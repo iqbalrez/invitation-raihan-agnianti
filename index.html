@@ -49,7 +49,8 @@
 </head>
 
 <body class="font-sans bg-krem text-slate-800">
-
+  <!-- Musik Latar -->
+  <audio id="bg-music" src="audio/lagu.mp3" loop></audio>
 
   <!-- Layer pattern batik -->
   <div class="fixed inset-0 -z-40 bg-[url('img/batik-pattern.png')] bg-repeat bg-[length:300px_168px] opacity-5"></div>
@@ -87,6 +88,10 @@
         Minggu, 28 Desember 2025 · The Westlake Resto, Sleman
       </p>
 
+      <button id="btn-open-invite"
+        class="mt-8 inline-flex items-center gap-2 rounded-full bg-goldsoft px-7 py-2.5 text-sm md:text-base font-medium text-white shadow-md hover:shadow-lg hover:brightness-105 transition">
+        <span>Buka Undangan</span>
+      </button>
       <!-- <div class="mt-5 flex items-center gap-2 text-xs md:text-sm text-slate-500">
         <span class="inline-block w-9 h-px bg-goldsoft/60"></span>
         <span class="italic">Bismillahirrahmanirrahim</span>
@@ -108,7 +113,7 @@
     </section>
 
     <!-- KARTU PEMBUKA (card lebih dekoratif) -->
-    <section class="mb-4 js-reveal opacity-0 translate-y-6 transition-all duration-700">
+    <section id="opening-card" class="mb-4 js-reveal opacity-0 translate-y-6 transition-all duration-700">
       <div class="relative rounded-3xl p-[1.5px] shadow-lg">
         <div
           class="relative rounded-[1.6rem] bg-white/90 backdrop-blur-sm border border-white/60 px-6 py-6 md:px-8 md:py-8">
@@ -409,7 +414,7 @@
 
           <!-- tombol simpan ke kalender -->
           <div class="flex flex-col md:flex-row items-center justify-center gap-3">
-            <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Tasyakuran%20Pernikahan%20Raihan%20%26%20Agnianti&details=Tasyakuran%20Pernikahan%20Raihan%20%26%20Agnianti&location=The%20Westlake%20Resto%2C%20Gamping%2C%20Sleman&dates=20251228T040000Z/20251228T070000Z" "
+            <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Tasyakuran%20Pernikahan%20Raihan%20%26%20Agnianti&details=Tasyakuran%20Pernikahan%20Raihan%20%26%20Agnianti&location=The%20Westlake%20Resto%2C%20Gamping%2C%20Sleman&dates=20251228T040000Z/20251228T070000Z"
               target=" _blank" rel="noopener noreferrer"
               class="inline-flex items-center gap-2 rounded-full bg-goldsoft text-slate-900 px-6 py-2.5 text-sm font-semibold shadow-md hover:shadow-lg hover:bg-goldsoft/90 transition">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
@@ -512,6 +517,7 @@
     </footer>
   </div>
 
+
   <script>
       // Animasi muncul saat scroll
       (function () {
@@ -581,9 +587,38 @@
       updateCountdown();
       const timer = setInterval(updateCountdown, 1000);
     })();
+
+    // Tombol "Buka Undangan" → play musik + scroll ke detail acara
+    (function () {
+      const btn = document.getElementById("btn-open-invite");
+      const audio = document.getElementById("bg-music");
+      const detailSection = document.getElementById("opening-card");
+
+      if (!btn || !audio) return;
+
+      let isPlaying = false;
+
+      btn.addEventListener("click", function () {
+        // scroll ke detail acara
+        if (detailSection) {
+          detailSection.scrollIntoView({ behavior: "smooth" });
+        }
+
+        // play musik
+        if (!isPlaying) {
+          audio
+            .play()
+            .then(() => {
+              audio.volume = 0.6;
+              isPlaying = true;
+            })
+            .catch((err) => {
+              console.log("Gagal memutar audio:", err);
+            });
+        }
+      });
+    })();
   </script>
-
-
 </body>
 
 </html>
