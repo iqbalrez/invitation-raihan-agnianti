@@ -444,18 +444,34 @@
           </div>
 
           <!-- tombol simpan ke kalender -->
-          <div class="flex flex-col md:flex-row items-center justify-center gap-3">
-            <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Tasyakuran%20Pernikahan%20Raihan%20%26%20Agnianti&details=Tasyakuran%20Pernikahan%20Raihan%20%26%20Agnianti&location=The%20Westlake%20Resto%2C%20Gamping%2C%20Sleman&dates=20251228T040000Z/20251228T070000Z"
-              target=" _blank" rel="noopener noreferrer"
+          <div class="flex flex-col items-center gap-3">
+            <button id="dropdownButton"
               class="inline-flex items-center gap-2 rounded-full bg-goldsoft text-slate-900 px-6 py-2.5 text-sm font-semibold shadow-md hover:shadow-lg hover:bg-goldsoft/90 transition">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
                   d="M8 7V3m8 4V3M5 11h14M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" />
               </svg>
-              Simpan ke Google Kalender
-            </a>
+              Simpan ke Kalender
+            </button>
+
+            <!-- Dropdown Flex -->
+            <div id="dropdownMenu" class="flex flex-col gap-2 w-full max-w-xs bg-white border rounded-xl shadow-md p-3
+                    opacity-0 max-h-0 overflow-hidden transition-all duration-300">
+
+              <a download href="file/sesi1.ics"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-100 transition text-center" onclick="">
+                Sesi 1: 11.00–14.00 WIB
+              </a>
+
+              <a download href="file/sesi2.ics"
+                class="block px-4 py-2 rounded-lg hover:bg-slate-100 transition text-center">
+                Sesi 2: 14.00–16.00 WIB
+              </a>
+
+            </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -573,25 +589,56 @@
   </button>
 
   <script>
-      // Animasi muncul saat scroll
-      (function () {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.remove("opacity-0", "translate-y-6");
-                entry.target.classList.add("opacity-100", "translate-y-0");
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          {
-            threshold: 0.15,
-          }
-        );
+    // Button dropdown simpan ke kalender
+    const btn = document.getElementById("dropdownButton");
+    const menu = document.getElementById("dropdownMenu");
+    let open = false;
 
-        document.querySelectorAll(".js-reveal").forEach((el) => observer.observe(el));
-      })();
+    btn.addEventListener("click", () => {
+      open = !open;
+
+      if (open) {
+        menu.classList.remove("max-h-0", "opacity-0");
+        menu.classList.add("max-h-96", "opacity-100");
+      } else {
+        menu.classList.add("max-h-0", "opacity-0");
+        menu.classList.remove("max-h-96", "opacity-100");
+      }
+    });
+
+    menu.addEventListener("click", () => {
+      open = false;
+      menu.classList.add("max-h-0", "opacity-0");
+      menu.classList.remove("max-h-96", "opacity-100");
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!btn.contains(event.target) && !menu.contains(event.target)) {
+        open = false;
+        menu.classList.add("max-h-0", "opacity-0");
+        menu.classList.remove("max-h-96", "opacity-100");
+      }
+    });
+
+    // Animasi muncul saat scroll
+    (function () {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.remove("opacity-0", "translate-y-6");
+              entry.target.classList.add("opacity-100", "translate-y-0");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.15,
+        }
+      );
+
+      document.querySelectorAll(".js-reveal").forEach((el) => observer.observe(el));
+    })();
 
     // Countdown ke hari acara
     (function () {
